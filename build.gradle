@@ -1,5 +1,7 @@
 version = '5.0'
-
+wrapper {
+    gradleVersion = '6.3'
+}
 
 subprojects {
     apply plugin: 'idea'

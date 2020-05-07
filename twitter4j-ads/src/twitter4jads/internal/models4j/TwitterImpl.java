@@ -155,10 +155,31 @@ public class TwitterImpl extends TwitterBaseImpl implements Twitter {
      */
     @Override
     public Status updateStatus(String status) throws TwitterException {
-        return factory.createStatus(post(conf.getRestBaseURL() + "statuses/update.json",
-                                         mergeParameters(new HttpParameter[]{new HttpParameter("status", status)}, new HttpParameter[]{TWEET_MODE})));
+        final String updateStatus = "statuses/update.json";
+		final String restBaseURL = conf.getRestBaseURL();
+		final String fqnUrl = restBaseURL + updateStatus;
+		final HttpParameter statusParam = new HttpParameter("status", status);
+		final HttpParameter[] statusParamArr = new HttpParameter[]{statusParam};
+		final HttpParameter[] tweetMode = new HttpParameter[]{TWEET_MODE};
+		final HttpParameter[] mergeParameters = mergeParameters(statusParamArr, tweetMode);
+		HttpResponse post = post(fqnUrl, mergeParameters);
+		final Status statusResponse = factory.createStatus(post);
+		return statusResponse;
     }
 
+    public Status updateStatus(String status, long contributeeId) throws TwitterException {
+    	
+    	final String updateStatus = "statuses/update.json";
+		final String restBaseURL = conf.getRestBaseURL();
+		final String fqnUrl = restBaseURL + updateStatus;
+		final HttpParameter statusParam = new HttpParameter("status", status);
+		final HttpParameter[] statusParamArr = new HttpParameter[]{statusParam};
+		final HttpParameter[] tweetMode = new HttpParameter[]{TWEET_MODE};
+		final HttpParameter[] mergeParameters = mergeParameters(statusParamArr, tweetMode);
+		HttpResponse post = post(fqnUrl, mergeParameters, contributeeId);
+		final Status statusResponse = factory.createStatus(post);
+		return statusResponse;
+    }
     /**
      * {@inheritDoc}
      */

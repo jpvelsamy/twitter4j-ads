@@ -44,7 +44,7 @@ import static twitter4jads.internal.http.HttpResponseCode.SERVICE_UNAVAILABLE;
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-abstract class TwitterBaseImpl implements TwitterBase, Serializable, OAuthSupport, HttpResponseListener {
+public abstract class TwitterBaseImpl implements TwitterBase, Serializable, OAuthSupport, HttpResponseListener {
     protected Configuration conf;
     protected transient String screenName = null;
     protected transient long id = 0;
@@ -776,6 +776,25 @@ abstract class TwitterBaseImpl implements TwitterBase, Serializable, OAuthSuppor
         }
     }
 
+    protected HttpResponse post(String url, HttpParameter[] params, long userId) throws TwitterException {
+        ensureAuthorizationEnabled();
+        
+        if (!conf.isMBeanEnabled()) {
+            return http.post(url, mergeImplicitParams(params), auth, userId);
+        } else {
+            // intercept HTTP call for monitoring purposes
+            HttpResponse response = null;
+            long start = System.currentTimeMillis();
+            try {
+                response = http.post(url, mergeImplicitParams(params), auth, userId);
+            } finally {
+                long elapsedTime = System.currentTimeMillis() - start;
+                TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
+            }
+            return response;
+        }
+    }
+    
     protected HttpResponse post(String url, String requestBody) throws TwitterException {
         ensureAuthorizationEnabled();
         if (!conf.isMBeanEnabled()) {
@@ -1031,4 +1050,5 @@ abstract class TwitterBaseImpl implements TwitterBase, Serializable, OAuthSuppor
         }
     }
 
+    
 }

@@ -1,17 +1,17 @@
 package twitter4jads.api;
 
+import java.util.List;
+import java.util.Optional;
+
 import twitter4jads.BaseAdsListBatchPostResponse;
 import twitter4jads.BaseAdsListResponse;
 import twitter4jads.BaseAdsListResponseIterable;
 import twitter4jads.BaseAdsResponse;
 import twitter4jads.internal.models4j.TwitterException;
-import twitter4jads.models.ads.TailoredAudience;
+import twitter4jads.models.ads.audience.TailoredAudience;
 import twitter4jads.models.ads.audience.TailoredAudienceMatchingRules;
 import twitter4jads.models.ads.audience.TailoredAudienceOperation;
 import twitter4jads.models.ads.audience.TailoredAudiencePermission;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * User: abhay
@@ -29,7 +29,7 @@ public interface TwitterAdsAudienceApi {
      * @throws TwitterException
      * @see <a href="https://dev.twitter.com/ads/reference/get/accounts/%3Aaccount_id/tailored_audiences">https://dev.twitter.com/ads/reference/get/accounts/%3Aaccount_id/tailored_audiences</a>
      */
-    BaseAdsListResponseIterable<TailoredAudience> getAllTailoredAudiences(String accountId, Optional<Integer> count,
+    BaseAdsListResponseIterable<twitter4jads.models.ads.audience.TailoredAudience> getAllTailoredAudiences(String accountId, Optional<Integer> count,
                                                                           Optional<Boolean> withDeleted, Optional<String> cursor)
             throws TwitterException;
 
@@ -40,7 +40,7 @@ public interface TwitterAdsAudienceApi {
      * @throws TwitterException
      * @see <a href="https://dev.twitter.com/ads/reference/get/accounts/%3Aaccount_id/tailored_audiences/%3Aid">https://dev.twitter.com/ads/reference/get/accounts/%3Aaccount_id/tailored_audiences/%3Aid</a>
      */
-    BaseAdsResponse<TailoredAudience> getTailoredAudienceForId(String accountId, String tailoredAudienceId) throws TwitterException;
+    BaseAdsResponse<twitter4jads.models.ads.audience.TailoredAudience> getTailoredAudienceForId(String accountId, String tailoredAudienceId) throws TwitterException;
 
     /**
      * @param accountId          The identifier for the leveraged account.

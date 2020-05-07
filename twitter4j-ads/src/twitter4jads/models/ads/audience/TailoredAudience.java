@@ -1,6 +1,9 @@
-package twitter4jads.models.ads;
+package twitter4jads.models.ads.audience;
 
 import com.google.gson.annotations.SerializedName;
+
+import twitter4jads.models.ads.TargetingType;
+import twitter4jads.models.ads.TwitterEntity;
 import twitter4jads.models.ads.audience.TailoredAudiencePermissionLevel;
 import twitter4jads.models.ads.audience.TailoredAudienceType;
 

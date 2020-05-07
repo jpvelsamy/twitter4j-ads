@@ -121,6 +121,17 @@ public final class HttpClientWrapper implements java.io.Serializable {
         return request(new HttpRequest(POST, url, parameters, null, null, this.requestHeaders));
     }
 
+    public HttpResponse post(String url, HttpParameter[] parameters, Authorization auth, long userId) throws TwitterException
+	{
+    	 Map<String, String> headers = new HashMap<String, String>(this.requestHeaders);
+    	
+    	 if (requestHeaders != null) {
+             headers.putAll(requestHeaders);
+         }
+    	 headers.put("x-act-as-user-id", Long.toString(userId));
+    	  return request(new HttpRequest(POST, url, parameters, null, null, headers));
+	}
+    
     public HttpResponse post(String url, HttpParameter[] parameters, Map<String, String> requestHeaders) throws TwitterException {
         Map<String, String> headers = new HashMap<String, String>(this.requestHeaders);
         if (requestHeaders != null) {
@@ -222,4 +233,6 @@ public final class HttpClientWrapper implements java.io.Serializable {
         result = 31 * result + requestHeaders.hashCode();
         return result;
     }
+
+	
 }
