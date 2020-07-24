@@ -121,6 +121,12 @@ public class TwitterImpl extends TwitterBaseImpl implements Twitter {
                 mergeParameters(new HttpParameter[]{new HttpParameter("user_id", userId)}, paging.asPostParameterArray()),
                 new HttpParameter[]{TWEET_MODE})));
     }
+    
+    public ResponseList<Status> getUserTimeLine( long userId, Paging paging) throws TwitterException {
+        return factory.createStatusList(get(conf.getRestBaseURL() + "statuses/user_timeline.json", mergeParameters(
+                mergeParameters(new HttpParameter[]{new HttpParameter("user_id", userId)}, paging.asPostParameterArray()),
+                new HttpParameter[]{TWEET_MODE})));
+    }
 
     /* Tweets Resources */
 
